@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AIC20-Client-Java-master.iml" filepath="$PROJECT_DIR$/AIC20-Client-Java-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CoronaVirus-AIC2020.iml" filepath="$PROJECT_DIR$/CoronaVirus-AIC2020.iml" />
     </modules>
   </component>
 </project>

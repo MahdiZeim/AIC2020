@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="gson-2.8.5">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/gson-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/AIC20-Client-Java-master/gson-2.8.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
