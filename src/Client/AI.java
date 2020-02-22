@@ -21,7 +21,8 @@ public class AI {
     private Path pathToSecondEnemyKing;
     private King firstEnemyKing;
     private King secondEnemyKing;
-    private Utl utl;
+    public Utl utl = new Utl();
+    private List<BaseUnit> myHand;
 
     public void pick(World world) {
         System.out.println("pick started");
@@ -31,22 +32,21 @@ public class AI {
         rows = map.getRowNum();
         cols = map.getColNum();
 
-        List<Integer> myHand = utl.chooseHand();
+        myHand = utl.choosingHand(world);
 
-        world.chooseHandById(myHand);
+        world.chooseHand(myHand);
+        // find a way to Enemies Kings
+        firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
+        secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
 
-     // find a way to Enemies Kings
-     firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
-     secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
-
-     pathToFirstEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), firstEnemyKing.getCenter());
-     pathToSecondEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), secondEnemyKing.getCenter());
+        pathToFirstEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), firstEnemyKing.getCenter());
+        pathToSecondEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), secondEnemyKing.getCenter());
 
     }
 
     public void turn(World world) {
         //System.out.println("turn started: " + world.getCurrentTurn());
-
+        myHand = world.getMe().getHand();
 
         Player myself = world.getMe();
         int maxAp = world.getGameConstants().getMaxAP();
@@ -54,7 +54,7 @@ public class AI {
         // play all of hand once your ap reaches maximum. if ap runs out, putUnit doesn't do anything
         if (myself.getAp() == maxAp) {
             for (BaseUnit baseUnit : myself.getHand()) {
-                world.putUnit(baseUnit, pathForMyUnits);
+                //world.putUnit(baseUnit, pathForMyUnits);
                 if(baseUnit.getTypeId() % 2 == 0)
                     world.putUnit(baseUnit, pathToFirstEnemyKing);
                 else
