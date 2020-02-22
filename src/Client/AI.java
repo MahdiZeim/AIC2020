@@ -51,6 +51,9 @@ public class AI {
     // find a way to Enemies Kings
     King firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
     King secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
+
+    Path pathToFirstEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), firstEnemyKing.getCenter());
+    Path pathToSecondEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), secondEnemyKing.getCenter());
     }
 
     public void turn(World world) {
