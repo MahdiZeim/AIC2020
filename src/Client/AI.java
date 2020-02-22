@@ -17,6 +17,10 @@ public class AI {
     private int cols;
     private Random random = new Random();
     private Path pathForMyUnits;
+    private Path pathToFirstEnemyKing;
+    private Path pathToSecondEnemyKing;
+    private King firstEnemyKing;
+    private King secondEnemyKing;
 
     public void pick(World world) {
         System.out.println("pick started");
@@ -27,45 +31,50 @@ public class AI {
         cols = map.getColNum();
 
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
-        List<BaseUnit> myDeck = new ArrayList<>();
+        List<BaseUnit> myHand = new ArrayList<>();
 
         // choosing  units by id, maybe they are good
         for (BaseUnit baseUnit : allBaseUnits) {
             if (baseUnit.getTypeId() == 0)
-                myDeck.add(baseUnit);
+                myHand.add(baseUnit);
             if (baseUnit.getTypeId() == 1)
-                myDeck.add(baseUnit);
+                myHand.add(baseUnit);
             if (baseUnit.getTypeId() == 2)
-                myDeck.add(baseUnit);
+                myHand.add(baseUnit);
             if (baseUnit.getTypeId() == 6)
-                myDeck.add(baseUnit);
+                myHand.add(baseUnit);
             if (baseUnit.getTypeId() == 7)
-                myDeck.add(baseUnit);
+                myHand.add(baseUnit);
         }
 
         // picking the chosen hand - rest of the hand will automatically be filled with random baseUnits
-        world.chooseHand(myDeck);
+        world.chooseHand(myHand);
 
-        //other preprocess
-//        pathForMyUnits = world.getFriend().getPathsFromPlayer().get(0);
-    // find a way to Enemies Kings
-    King firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
-    King secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
+     // find a way to Enemies Kings
+     firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
+     secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
 
-    Path pathToFirstEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), firstEnemyKing.getCenter());
-    Path pathToSecondEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), secondEnemyKing.getCenter());
+     pathToFirstEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), firstEnemyKing.getCenter());
+     pathToSecondEnemyKing = world.getShortestPathToCell(world.getMe().getPlayerId(), secondEnemyKing.getCenter());
+
     }
 
     public void turn(World world) {
-        System.out.println("turn started: " + world.getCurrentTurn());
+        //System.out.println("turn started: " + world.getCurrentTurn());
+
 
         Player myself = world.getMe();
         int maxAp = world.getGameConstants().getMaxAP();
 
         // play all of hand once your ap reaches maximum. if ap runs out, putUnit doesn't do anything
         if (myself.getAp() == maxAp) {
-            for (BaseUnit baseUnit : myself.getHand())
+            for (BaseUnit baseUnit : myself.getHand()) {
                 world.putUnit(baseUnit, pathForMyUnits);
+                if(baseUnit.getTypeId() % 2 == 0)
+                    world.putUnit(baseUnit, pathToFirstEnemyKing);
+                else
+                    world.putUnit(baseUnit, pathToSecondEnemyKing);
+            }
         }
 
         // this code tries to cast the received spell
@@ -111,7 +120,7 @@ public class AI {
     }
 
     public void end(World world, Map<Integer, Integer> scores) {
-        System.out.println("end started");
-        System.out.println("My score: " + scores.get(world.getMe().getPlayerId()));
+//        System.out.println("end started");
+//        System.out.println("My score: " + scores.get(world.getMe().getPlayerId()));
     }
 }
