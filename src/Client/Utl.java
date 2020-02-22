@@ -1,6 +1,7 @@
 package Client;
 
 import Client.Model.BaseUnit;
+import Client.Model.Path;
 import Client.Model.World;
 
 import java.util.ArrayList;
@@ -20,5 +21,8 @@ public class Utl {
 
     public BaseUnit unitSelector(World world, List<BaseUnit> currentHand){
         return world.getAllBaseUnits().get(0);
+    }
+    public Path pathSelector(World world){
+        return null;
     }
 }
