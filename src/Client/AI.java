@@ -21,6 +21,7 @@ public class AI {
     private Path pathToSecondEnemyKing;
     private King firstEnemyKing;
     private King secondEnemyKing;
+    private Utl utl;
 
     public void pick(World world) {
         System.out.println("pick started");
@@ -30,25 +31,9 @@ public class AI {
         rows = map.getRowNum();
         cols = map.getColNum();
 
-        List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
-        List<BaseUnit> myHand = new ArrayList<>();
+        List<Integer> myHand = utl.chooseHand();
 
-        // choosing  units by id, maybe they are good
-        for (BaseUnit baseUnit : allBaseUnits) {
-            if (baseUnit.getTypeId() == 0)
-                myHand.add(baseUnit);
-            if (baseUnit.getTypeId() == 1)
-                myHand.add(baseUnit);
-            if (baseUnit.getTypeId() == 2)
-                myHand.add(baseUnit);
-            if (baseUnit.getTypeId() == 6)
-                myHand.add(baseUnit);
-            if (baseUnit.getTypeId() == 7)
-                myHand.add(baseUnit);
-        }
-
-        // picking the chosen hand - rest of the hand will automatically be filled with random baseUnits
-        world.chooseHand(myHand);
+        world.chooseHandById(myHand);
 
      // find a way to Enemies Kings
      firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
