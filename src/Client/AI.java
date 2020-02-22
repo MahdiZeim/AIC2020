@@ -29,9 +29,17 @@ public class AI {
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
         List<BaseUnit> myDeck = new ArrayList<>();
 
-        // choosing all flying units
+        // choosing  units by id, maybe they are good
         for (BaseUnit baseUnit : allBaseUnits) {
-            if (baseUnit.isFlying())
+            if (baseUnit.getTypeId() == 0)
+                myDeck.add(baseUnit);
+            if (baseUnit.getTypeId() == 1)
+                myDeck.add(baseUnit);
+            if (baseUnit.getTypeId() == 2)
+                myDeck.add(baseUnit);
+            if (baseUnit.getTypeId() == 6)
+                myDeck.add(baseUnit);
+            if (baseUnit.getTypeId() == 7)
                 myDeck.add(baseUnit);
         }
 
@@ -39,7 +47,10 @@ public class AI {
         world.chooseHand(myDeck);
 
         //other preprocess
-        pathForMyUnits = world.getFriend().getPathsFromPlayer().get(0);
+//        pathForMyUnits = world.getFriend().getPathsFromPlayer().get(0);
+    // find a way to Enemies Kings
+    King firstEnemyKing = world.getKingById(world.getFirstEnemy().getPlayerId());
+    King secondEnemyKing = world.getKingById(world.getSecondEnemy().getPlayerId());
     }
 
     public void turn(World world) {
